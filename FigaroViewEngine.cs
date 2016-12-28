@@ -54,7 +54,8 @@ namespace Nancy.Demos.Figaro
 
                         qc?.SetNamespace("db", FigaroDataContext.META_URI);
                         qc?.SetNamespace("nancy",context.resolver.Uri.ToString());
-
+                        //http://xqilla.sourceforge.net/ExtensionFunctions
+                        qc?.SetNamespace("xqilla", "http://xqilla.sourceforge.net/Functions");
                         var sbResp = new StringBuilder();
 
                         if (i == 0)

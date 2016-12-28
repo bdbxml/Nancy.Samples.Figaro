@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:tns="http://schemas.bdbxml.net/configuration/6.0/HA" elementFormDefault="qualified" targetNamespace="http://schemas.bdbxml.net/configuration/6.0/HA" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vs="http://schemas.microsoft.com/Visual-Studio-Intellisense">
+<xs:schema xmlns:tns="http://schemas.bdbxml.net/configuration/6.0/TDS" elementFormDefault="qualified" targetNamespace="http://schemas.bdbxml.net/configuration/6.0/TDS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vs="http://schemas.microsoft.com/Visual-Studio-Intellisense">
   <xs:simpleType name="small_boolean_Type">
     <xs:restriction base="xs:NMTOKEN">
       <xs:enumeration value="false" />
@@ -39,65 +39,11 @@
       <xs:enumeration value="Youngest"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="ReplicationViewOptions">
-    <xs:list>
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="None"/>
-          <xs:enumeration value="Partial"/>
-          <xs:enumeration value="Full"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:list>
-  </xs:simpleType>
-  <xs:simpleType name="ReplicationStatisticsOptions">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None"/>
-      <xs:enumeration value="DisplayAll"/>
-      <xs:enumeration value="Clear"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ReplicationStartOptions">
-    <xs:list>
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="Client"/>
-          <xs:enumeration value="Master"/>
-          <xs:enumeration value="Election"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:list>
-  </xs:simpleType>
-  <xs:simpleType name="ReplicationSiteConnectionStatus">
-    <xs:list>
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="Unknown"/>
-          <xs:enumeration value="Connected"/>
-          <xs:enumeration value="Disconnected"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:list>
-  </xs:simpleType>
-  <xs:simpleType name="RecordAckPolicy">
-    <xs:list>
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="All"/>
-          <xs:enumeration value="AllAvailable"/>
-          <xs:enumeration value="AllPeers"/>
-          <xs:enumeration value="None"/>
-          <xs:enumeration value="One"/>
-          <xs:enumeration value="OnePeer"/>
-          <xs:enumeration value="Quorum"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:list>
-  </xs:simpleType>
   <xs:simpleType name="EnvOpenOptions">
     <xs:list>
       <xs:simpleType>
         <xs:restriction base="xs:string">
+          <!--<xs:enumeration value="InitReplication"/>-->
           <xs:enumeration value="InitTransaction"/>
           <xs:enumeration value="TransactionDefaults"/>
           <xs:enumeration value="Recover"/>
@@ -115,8 +61,6 @@
           <xs:enumeration value="Lockdown"/>
           <xs:enumeration value="InitMemoryBufferPool"/>
           <xs:enumeration value="ConcurrentDataStoreDefaults"/>
-          <xs:enumeration value="Replication"/>
-          <xs:enumeration value="ReplicationDefaults"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:list>
@@ -202,24 +146,24 @@
   </xs:simpleType>
   <xs:element name="Figaro" type="tns:Figaro.Configuration.FigaroSectionCT" />
   <xs:complexType name="Figaro.Configuration.FigaroSectionCT">
-    <xs:all>
-      <xs:element minOccurs="0" name="Environments" type="tns:Figaro.Configuration.EnvElementCollectionCT">
-        <xs:annotation>
-          <xs:documentation>Gets or sets the environment element collection.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element minOccurs="0" name="Managers" type="tns:Figaro.Configuration.ManagerElementCollectionCT">
-        <xs:annotation>
-          <xs:documentation>Gets or sets the manager element collection.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element minOccurs="0" name="DefaultContainerSettings" type="tns:Figaro.Configuration.DefaultContainerElementCT">
-        <xs:annotation>
-          <xs:documentation>Default container settings set at the assembly level.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:all>
-  </xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="Environments" type="tns:Figaro.Configuration.EnvElementCollectionCT">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the environment element collection.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="Managers" type="tns:Figaro.Configuration.ManagerElementCollectionCT">
+          <xs:annotation>
+            <xs:documentation>Gets or sets the manager element collection.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="DefaultContainerSettings" type="tns:Figaro.Configuration.DefaultContainerElementCT">
+          <xs:annotation>
+            <xs:documentation>Default container settings set at the assembly level.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:all>
+</xs:complexType>
   <xs:complexType name="Figaro.Configuration.EnvElementCollectionCT">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="FigaroEnv" type="tns:Figaro.Configuration.FigaroEnvElementCT">
@@ -314,13 +258,6 @@
           <xs:documentation>Gets or sets the collection of environment configuration settings to enable or disable.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element minOccurs="0" maxOccurs="1" name="Replication" type="tns:Figaro.Configuration.ReplicationElementCT">
-        <xs:annotation>
-          <xs:documentation>
-            Gets or sets the collection of configuration settings for replication.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
     </xs:all>
     <xs:attribute name="name" use="required" type="xs:string">
       <xs:annotation>
@@ -330,295 +267,6 @@
     <xs:attribute name="threadCount" use="optional" type="xs:byte">
       <xs:annotation>
         <xs:documentation>The estimated thread count for the FigaroEnv instance.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-  </xs:complexType>
-  <!-- DBSite -->
-  <xs:complexType name="Figaro.Configuration.DBSiteCT">
-    <xs:annotation>
-      <xs:documentation>Configure a replication site for the Replication Manager.</xs:documentation>
-    </xs:annotation>
-    <xs:attribute name="address" use="required" type="xs:string">
-      <xs:annotation>
-        <xs:documentation>
-          Required. The site's host address (DNS name/IP address) and port number (i.e. figaro.azurewebsites.net:1234)
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="local" use="required" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>
-          Required. Specifies that this site is the local site within the replication group.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="peer" use="optional" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. Specifies that the site may be used as a target for "client-to-client" synchronization messages.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="legacy" use="optional" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. Specifies that the site is already part of an existing group from a previous product/platform version. 
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="bootstrap" use="optional" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. Specifies that a remote site may be used as a "helper" when the local site is first joining the replication group. 
-          Once the local site has been established as a member of the group, this setting is ignored.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="groupCreator" use="optional" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>
-		      Optional. Set to True by default, this value specifies that this site should create the initial group membership database contents, defining a "group" of just the one site, rather than trying to join an existing group when it starts for the first time.
-		      This setting can only be used on the local site. It is ignored after the local site's initial startup and when configured for a remote site.          
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>    
-  </xs:complexType>
-  <!-- DBSite Collection -->
-  <xs:complexType name="Figaro.Configuration.DBSite.ElementCollectionCT">
-    <xs:annotation>
-      <xs:documentation>
-        Represents a collection of one or more DBSite objects in the Replication element.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="Site" minOccurs="1" maxOccurs="unbounded" type="tns:Figaro.Configuration.DBSiteCT"></xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <!--Replication -->
-  <xs:complexType name="Figaro.Configuration.ReplicationElementCT">
-    <xs:annotation>
-      <xs:documentation>
-        Configuration element for the ReplicationConfig object.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:choice>
-      <xs:element name="RetransmissionRequest" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The minimum and maximum number of microseconds a client waits before requesting retransmissions.
-          </xs:documentation>          
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="min" use="optional" type="xs:unsignedInt"/>
-          <xs:attribute name="max" use="optional" type="xs:unsignedInt"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="IncomingQueue" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The size, in gigabytes and bytes, of the maximum amount of dynamic memory used by the Replication Manager incoming queue.
-          </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="gigaBytes" use="optional" type="xs:unsignedInt"/>
-          <xs:attribute name="bytes" use="optional" type="xs:unsignedInt"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RecordAcknowledgment" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-             Specify how master and client sites handle the acknowledgment of replication messages which is necessary for "permanent" records.
-          </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="policy" use="required" type="tns:RecordAckPolicy"/>
-          <xs:attribute name="timeout" use="optional" type="xs:unsignedInt"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ClockSkew" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            Set the clock skew ratio among replication group members based on the fastest and slowest measurements among the group for use with master leases.
-          </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="fast" use="required" type="xs:unsignedInt"/>
-          <xs:attribute name="slow" use="required" type="xs:unsignedInt"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Checkpoint" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The amount of time (in microseconds) a master site delays between completing a checkpoint and writing a checkpoint record into the log.
-          </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:attribute name="delay" use="required" type="xs:unsignedInt"/>
-        </xs:complexType>
-      </xs:element>      
-      <xs:element name="MasterLeases" minOccurs="0" maxOccurs="1">
-        <xs:complexType>
-          <xs:attribute name="enabled" use="required" type="xs:boolean"/>
-          <xs:attribute name="timeout" use="required" type="xs:unsignedInt"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Election" minOccurs="0" maxOccurs="1">
-        <xs:complexType>
-          <xs:attribute name="retry" use="optional" type="xs:unsignedInt">
-            <xs:annotation>
-              <xs:documentation>
-                Configure the amount of time (in microseconds) the replication manager waits before retrying a failed election. The default wait time is 10 seconds. 
-              </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="timeout" use="optional" type="xs:unsignedInt">
-            <xs:annotation>
-              <xs:documentation>
-                The timeout period (in microseconds) for an election. The default timeout is 2 seconds.
-              </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="fullTimeout" use="optional" type="xs:unsignedInt">
-            <xs:annotation>
-              <xs:documentation>
-                An optional configuration timeout period (in microseconds) to wait for full election participation the first time the replication group finds a master.
-		            By default this option is turned off and normal election timeouts are used. 
-              </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Connection" minOccurs="0" maxOccurs="1">
-        <xs:complexType>
-          <xs:attribute name="retry" use="required" type="xs:unsignedInt"/>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Heartbeat" minOccurs="0" maxOccurs="1">
-        <xs:complexType>
-          <xs:attribute name="monitor" use="optional" type="xs:unsignedInt">
-            <xs:annotation>
-              <xs:documentation>
-                The amount of time (in microseconds) the replication manager, running at a client site, waits for some message activity on the connection from the
-		            master (heartbeats or other messages) before concluding that the connection has been lost. When 0 (the default), no monitoring is performed.
-              </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute name="send" use="optional" type="xs:unsignedInt">
-            <xs:annotation>
-              <xs:documentation>
-                The frequency (in microseconds) at which the replication manager, running at a master site, broadcasts a heartbeat message in an otherwise idle system.
-		            When 0 (the default), no heartbeat messages are sent. 
-              </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Sites" minOccurs="1" maxOccurs="1" type="tns:Figaro.Configuration.DBSite.ElementCollectionCT"/>
-    </xs:choice>
-    <xs:attribute name="priority" type="xs:unsignedInt" use="required">
-      <xs:annotation>
-        <xs:documentation>
-          The database environment's priority in replication group elections.
-          Default value is 100.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="start" type="xs:boolean" use="required">
-      <xs:annotation>
-        <xs:documentation>
-          Options for running the Start command on the Replication Manager once it's been configured.
-          Note that using the Start command may also require the FigaroEnv object to be opened as well.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="startOption" type="tns:ReplicationStartOptions" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. ReplicationStartOptions for running the Start command on the Replication Manager once it's been configured.
-          Note that using the Start command may also require the FigaroEnv object to be opened as well.
-          If you flag the start option and do not set this command, it will default to Election.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="startThreads" type="xs:unsignedShort" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. The number of background threads for the Replication Manager.
-          Note that using the Start command may also require the FigaroEnv object to be opened as well.
-          If you flag the start option and do not set this command, it will default to 3.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="bulkTransfer" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-          If true, the replication master sends groups of records to the clients in a single network transfer.
-          Default value is False.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="delayClientSync" use="optional" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. If true, the client delays synchronizing to a newly declared master. 
-          Default value is False.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="inMemory" use="optional" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. If true, replication only stores the internal information in-memory and cannot keep persistent state across a site crash or reboot. By default, it is false and replication creates files in the environment home directory to preserve the internal information. 
-          Default value is False.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <!--<xs:attribute name="useMasterLeases" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. If true, master leases are used for this site.
-          Default value is False.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>-->
-    <xs:attribute name="autoInit" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-           If true, the replication master automatically re-initializes outdated clients.
-           Default value is True.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="noBlocking" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-          If true, method calls that are normally blocked during recovery will result in immediate errors.
-          Default value is False.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="strictTwoSite" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-           If true, the Replication Manager observes the strict "majority" rule in managing elections, even in a group with only 2 sites. This means the client in a 2-site group is unable to take over as master if the original master fails or becomes disconnected. Both sites in the replication group should have the same value for this parameter.
-           Default value is False.
-        </xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="twoSitePreferredMaster" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. If strictTwoSite is set, indicates whether this local site is the Master or Client. 
-          Default value is True (preferred master). Make sure you have a different setting for the other host or you may encounter a failure.
-        </xs:documentation>
-      </xs:annotation>      
-    </xs:attribute>
-    <xs:attribute name="replicationView" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>
-          Optional. Indicates whether the local site is a replication view, and if so whether it is a partial or a full view.
-          Default value is None.
-        </xs:documentation>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
@@ -663,7 +311,7 @@
         <xs:annotation>
           <xs:documentation>Gets or sets the collection of QueryContext item configuration available for preparing and executing queries.</xs:documentation>
         </xs:annotation>
-      </xs:element>
+      </xs:element>      
     </xs:all>
     <xs:attribute name="name" use="required" type="xs:string">
       <xs:annotation>
@@ -1246,7 +894,7 @@
   </xs:complexType>
   <xs:complexType name="Figaro.Configuration.QueryCollectionElementCT">
     <xs:sequence>
-      <xs:element name="Query" type="tns:Figaro.Configuration.QueryElementCT" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="Query" type="tns:Figaro.Configuration.QueryElementCT" minOccurs="0" maxOccurs="unbounded" />        
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

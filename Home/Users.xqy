@@ -4,8 +4,8 @@
 
 (: import module namespace figaro="http://modules.bdbxml.net/nancy/" at "nancy.xqm"; :)
 
-declare function nancy:decode($s as xs:string) as xs:string external;
-
+(: declare function nancy:decode($s as xs:string) as xs:string external;
+declare function xqilla:parse-html($html as xs:string?) as document-node()? external; :)
 
 <html>
 	<head>
@@ -53,7 +53,7 @@ declare function nancy:decode($s as xs:string) as xs:string external;
 							<td>{xs:string($row/row/@LastAccessDate)}</td>
 							<td><a href="{xs:string($row/row/@WebsiteUrl)}">{xs:string($row/row/@WebsiteUrl)}</a></td>
 							<td>{xs:string($row/row/@Location)}</td>
-							<td><pre>{xs:string($row/row/@AboutMe)}</pre></td>
+							<td>{xqilla:parse-html(xs:string($row/row/@AboutMe))}</td>
 							<td>{xs:string($row/row/@Views)}</td>
 							<td>{xs:string($row/row/@UpVotes)}</td>
 							<td>{xs:string($row/row/@DownVotes)}</td>

@@ -66,6 +66,9 @@ namespace Nancy.Demos.Figaro
             // Configuring Deadlock Detection: http://help.bdbxml.net/html/99788b9d-b930-4191-96f3-311f0b8ffebf.htm
             // DeadlockDetectType Enumeration: http://help.bdbxml.net/html/T_Figaro_DeadlockDetectType.htm
             Environment.DeadlockDetectPolicy = DeadlockDetectType.Oldest;
+            Environment.SetMaxLockers(5000);
+            Environment.SetMaxLocks(50000);
+            Environment.SetMaxLockedObjects(50000);
 
             var path = Path.Combine(rootPath, "data");
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
@@ -86,7 +89,7 @@ namespace Nancy.Demos.Figaro
 
             //Environment.SetTimeout(10000,EnvironmentTimeoutType.Lock);
             Environment.SetTimeout(10000, EnvironmentTimeoutType.Transaction);
-            Environment.SetTimeout(1000,EnvironmentTimeoutType.Lock);
+            Environment.SetTimeout(1000, EnvironmentTimeoutType.Lock);
 
             /* Enable message events for tracing purposes */
             //Environment.OnProcess += Environment_OnProcess;
@@ -109,32 +112,32 @@ namespace Nancy.Demos.Figaro
             /*
              * open the container
              */
-            //using (var tx = Manager.CreateTransaction(TransactionType.SyncTransaction))
-            //{
-            try
+            using (var tx = Manager.CreateTransaction(TransactionType.SyncTransaction))
             {
-                //more info on ContainerConfig: http://help.bdbxml.net/html/b54e4294-4814-404f-a15f-32162b672260.htm
-                BeerDb = Manager.OpenContainer("beer.dbxml",
-                    new ContainerConfig
-                    {
-                        MultiVersion = true,
-                        AllowCreate = true,
-                        Threaded = true,
-                        IndexNodes = ConfigurationState.Off,
-                        Transactional = true,
-                        NoMMap = false,
-                        Statistics = ConfigurationState.On
-                    });
-                //tx.Commit();
-                BeerDb.AddAlias("beer");
-                ConfigureContainerIndex();
+                try
+                {
+                    //more info on ContainerConfig: http://help.bdbxml.net/html/b54e4294-4814-404f-a15f-32162b672260.htm
+                    BeerDb = Manager.OpenContainer(tx,"beer.dbxml",
+                        new ContainerConfig
+                        {
+                            MultiVersion = true,
+                            AllowCreate = true,
+                            Threaded = true,
+                            IndexNodes = ConfigurationState.Off,
+                            Transactional = true,
+                            NoMMap = false,
+                            Statistics = ConfigurationState.On
+                        });
+                    tx.Commit();
+                    BeerDb.AddAlias("beer");
+                    ConfigureContainerIndex();
+                }
+                catch (Exception)
+                {
+                    tx.Abort();
+                    throw;
+                }
             }
-            catch (Exception)
-            {
-                //tx.Abort();
-                throw;
-            }
-            //}
 
             Initialized = true;
         }
@@ -143,7 +146,7 @@ namespace Nancy.Demos.Figaro
         /// Add an indexing strategy for metadata-based lookups of different message types.
         /// </summary>
         public void ConfigureContainerIndex()
-        {            
+        {
 
             /*
              * Add an indexing strategy for our metadata lookup
@@ -166,7 +169,7 @@ namespace Nancy.Demos.Figaro
                 catch (Exception ex)
                 {
                     tx.Abort();
-                    Console.WriteLine($"[ConfigureContainerIndex] {ex.GetType()}: {ex.Message}");                    
+                    Console.WriteLine($"[ConfigureContainerIndex] {ex.GetType()}: {ex.Message}");
                 }
             }
         }
@@ -379,7 +382,7 @@ namespace Nancy.Demos.Figaro
             resolver?.Dispose();
             BeerDb.Dispose();
             Manager?.Dispose();
-            GC.Collect(2,GCCollectionMode.Optimized);
+            GC.Collect(2, GCCollectionMode.Optimized);
             Environment?.Dispose();
         }
     }

@@ -56,13 +56,14 @@ namespace Nancy.Demos.Figaro
             return stats.ToString();
         }
 
-        [Description("Prints the replication statistics.")]
-        [Template("<h1>Replication Statistics</h1><pre>{{model.result}}</pre>")]
-        public string RepStatistics()
-        {
-            var stats = context.Environment.ReplicationManager.GetStatistics(false);
-            return stats.ToString();
-        }
+        //for replication (HA)
+        //[Description("Prints the replication statistics.")]
+        //[Template("<h1>Replication Statistics</h1><pre>{{model.result}}</pre>")]
+        //public string RepStatistics()
+        //{
+        //    var stats = context.Environment.ReplicationManager.GetStatistics(false);
+        //    return stats.ToString();
+        //}
 
     }
 }

@@ -22,29 +22,35 @@ import module namespace figaro="http://modules.bdbxml.net/nancy/" at "nancy.xqm"
 			<div class="row">
 				<div class="col-sm-5 col-md-6">
 				<h3>Badges</h3>
-					<a href="/badges">{$badges} badges</a>
+					<!-- <a href="/badges">{$badges} badges</a> -->
+					<p>{$badges} badges</p>
 				</div>
 				<div class="col-sm-5 col-md-6">
 				<h3>Comments</h3>
-					<a href="/comments">{$comments} comments</a>
+					<!-- <a href="/comments">{$comments} comments</a> -->
+					<p>{$comments} comments</p>
 				</div>
 				<div class="col-sm-5 col-md-6">
 				<h3>PostHistory</h3>
-					<a href="/postHistory">{$postHistory} histories</a>
+					<!-- <a href="/postHistory">{$postHistory} histories</a> -->
+					<p>{$postHistory} histories</p>
 				</div>
 				<div class="col-sm-5 col-md-6">
 				<h3>PostLinks</h3>
-					<a href="/postlink">{$postLinks} post links</a>
+					<!-- <a href="/postlink">{$postLinks} post links</a> -->
+					<p>{$postLinks} post links</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-5 col-md-6">
 				<h3>Posts</h3>
-					<a href="/post">{$posts} posts</a>
+					<!-- <a href="/post">{$posts} posts</a> -->
+					<p>{$posts} posts</p>
 				</div>
 				<div class="col-sm-5 col-md-6">
 				<h3>Tags</h3>
-					<a href="/tag">{$tags} tags</a>
+					<!-- <a href="/tag">{$tags} tags</a> -->
+					<p>{$tags} tags</p>
 				</div>
 				<div class="col-sm-5 col-md-6">
 				<h3>Users</h3>
@@ -52,7 +58,8 @@ import module namespace figaro="http://modules.bdbxml.net/nancy/" at "nancy.xqm"
 				</div>
 				<div class="col-sm-5 col-md-6">
 				<h3>Votes</h3>
-					<a href="/votes">{$votes} votes</a>
+					<!-- <a href="/votes">{$votes} votes</a> -->
+					<p>{$votes} votes</p>
 				</div>
 			</div>
 		</div>

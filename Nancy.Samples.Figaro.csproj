@@ -58,15 +58,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Desaware.Dls.Interfaces40, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c8956dcc7a600871, processorArchitecture=MSIL">
-      <HintPath>..\packages\FHAN.x64.6.0.18.291\lib\x64\Desaware.Dls.Interfaces40.dll</HintPath>
+      <HintPath>..\packages\FTDSN.x64.6.0.18.298\lib\x64\Desaware.Dls.Interfaces40.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Desaware.MachineLicense40, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c8956dcc7a600871, processorArchitecture=MSIL">
-      <HintPath>..\packages\FHAN.x64.6.0.18.291\lib\x64\Desaware.MachineLicense40.DLL</HintPath>
+      <HintPath>..\packages\FTDSN.x64.6.0.18.298\lib\x64\Desaware.MachineLicense40.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Figaro, Version=6.0.18.999, Culture=neutral, PublicKeyToken=f6f39be683afad89, processorArchitecture=AMD64">
+      <HintPath>..\packages\FTDSN.x64.6.0.18.298\lib\x64\Figaro.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Figaro.Configuration, Version=6.0.18.0, Culture=neutral, PublicKeyToken=a69423a247fee477, processorArchitecture=AMD64">
-      <HintPath>..\packages\FHAN.x64.6.0.18.291\lib\x64\Figaro.Configuration.dll</HintPath>
+      <HintPath>..\packages\FTDSN.x64.6.0.18.298\lib\x64\Figaro.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Nancy, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -89,6 +93,7 @@
     <Compile Include="DecodeFunction.cs" />
     <Compile Include="FigaroBootstrapper.cs" />
     <Compile Include="FigaroDataContext.cs" />
+    <Compile Include="FigaroDataManager.cs" />
     <Compile Include="FigaroDiagnostics.cs" />
     <Compile Include="FigaroViewEngine.cs" />
     <Compile Include="FileModule.cs" />
@@ -206,12 +211,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\DEV\Figaro\2015\src\Figaro.vcxproj">
-      <Project>{8a9b1867-1133-49df-83b8-511a9ce23a90}</Project>
-      <Name>Figaro</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
