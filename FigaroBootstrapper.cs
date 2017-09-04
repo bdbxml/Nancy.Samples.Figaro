@@ -1,5 +1,6 @@
 ﻿using System;
 using Nancy.Bootstrapper;
+using Nancy.Configuration;
 using Nancy.Conventions;
 using Nancy.Diagnostics;
 using Nancy.TinyIoc;
@@ -11,8 +12,15 @@ namespace Nancy.Demos.Figaro
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
-            StaticConfiguration.EnableRequestTracing = true;
-            StaticConfiguration.DisableErrorTraces = false;            
+            
+        }
+
+        public override void Configure(INancyEnvironment environment)
+        {
+            environment.Diagnostics(true,"pass");
+            environment.StaticContent("/Content");
+            environment.Tracing(true, true);
+            base.Configure(environment);
         }
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
@@ -21,8 +29,9 @@ namespace Nancy.Demos.Figaro
             container.Register(new FigaroDataContext(RootPathProvider.GetRootPath()));
         }
 
-        protected override DiagnosticsConfiguration DiagnosticsConfiguration => 
-            new DiagnosticsConfiguration() { Password = "pass"};
+        
+        //protected override DiagnosticsConfiguration DiagnosticsConfiguration => 
+        //    new DiagnosticsConfiguration() { Password = "pass"};
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)
         {

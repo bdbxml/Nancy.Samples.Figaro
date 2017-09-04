@@ -14,18 +14,19 @@ namespace Nancy.Demos.Figaro
     {
         private readonly FigaroDataContext context;
         private readonly IFileUploadHandler handler;
+
         public FileModule(FigaroDataContext dataContext, IFileUploadHandler fileHandler)
         {
             handler = fileHandler;
             context = dataContext;
-                        
-            Post["/file"] = o => {
+            
+            Post("/file", o => {
                 var file = Request.Files.FirstOrDefault();
                 if (file == null) return new Response { StatusCode = HttpStatusCode.ExpectationFailed };
                 handler.HandleUpload(file.Name, file.Value);
-                
+
                 return new Response { StatusCode = HttpStatusCode.Accepted };
-            };
+            });
         }
 
     }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Configuration;
 using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Figaro;
 
 namespace Nancy.Demos.Figaro
 {
-    public class HomeModule : NancyModule
+    public sealed class HomeModule : NancyModule
     {
         private readonly FigaroDataContext context;
         public HomeModule(FigaroDataContext dataContext) : base("/")
@@ -16,16 +13,15 @@ namespace Nancy.Demos.Figaro
 
             if (dataContext.GetLoadCount() == 0)
             {
-                Get["/"] = o => 
-                $"Current database record count is " + context.GetLoadCount();
+                Get("/", _ => $"Current database record count is " + context.GetLoadCount());
             }
             else
-                Get["/"] = o => View["Home/Index.xqy"];
+                Get("/", o => View["Home/Index.xqy"]);
 
             /*
              * In this example we use the index to look up the metadata values on the category, and use it to get our counts.
              */
-            Get["/indexed"] = p => {
+            Get("/indexed", p => {
                 var qc = context.Manager.CreateQueryContext(EvaluationType.Eager);
                 try
                 {
@@ -54,9 +50,9 @@ namespace Nancy.Demos.Figaro
                     Trace.WriteLine($"{ex.GetType()}:{ex.Message}\r\n{ex.StackTrace}");
                     return HttpStatusCode.Locked;
                 }
-            };
+            });
 
-            Get["/Users"] = p =>
+            Get("/Users", p =>
             {
                 var qc = context.Manager.CreateQueryContext(EvaluationType.Eager);
                 try
@@ -80,7 +76,7 @@ namespace Nancy.Demos.Figaro
                     Trace.WriteLine($"{ex.GetType()}:{ex.Message}\r\n{ex.StackTrace}");
                     return HttpStatusCode.Locked;
                 }
-            };
+            });
 
         }
     }

@@ -17,19 +17,19 @@ namespace Nancy.Demos.Figaro
         /// <summary>
         /// Gets or sets the database environment.
         /// </summary>
-        /// <seealso cref="http://help.bdbxml.net/html/5f9eb5f1-764f-4a58-af59-fed2c87ad6bc.htm"/>
+        /// <seealso cref="http://help.bdbxml.net/api/Figaro.FigaroEnv.html"/>
         public FigaroEnv Environment { get; }
 
         /// <summary>
         /// Gets or sets the database manager.
         /// </summary>
-        /// <seealso cref="http://help.bdbxml.net/html/514038c7-547b-476e-8bda-69428f315172.htm"/>
+        /// <seealso cref="http://help.bdbxml.net/api/Figaro.XmlManager.html"/>
         public XmlManager Manager { get; }
 
         /// <summary>
         /// Gets the Figaro database.
         /// </summary>
-        /// <seealso cref="http://help.bdbxml.net/html/ccfbe603-567a-4e3f-a616-123a787a8ac6.htm"/>
+        /// <seealso cref="http://help.bdbxml.net/api/Figaro.Container.html"/>
         public Container Database { get; }
         /// <summary>
         /// Initialize the Figaro data objects via Figaro.Configuration 
@@ -53,7 +53,7 @@ namespace Nancy.Demos.Figaro
             Environment.ProcessEventEnabled = true;
             Environment.ProgressEventEnabled = true;
 
-            //http://help.bdbxml.net/html/b54e4294-4814-404f-a15f-32162b672260.htm
+            //http://help.bdbxml.net/api/Figaro.XmlManager.html#Figaro_XmlManager_CreateTransaction
             var trans = Manager.CreateTransaction();
             Database = Manager.OpenContainer(trans,ContainerConfigFactory.Create("demoMgr", "demo"));
             trans.Commit();
